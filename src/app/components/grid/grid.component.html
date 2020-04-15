@@ -1,0 +1,42 @@
+<div class="grid-container">
+  <div class="table-container">
+    <form [formGroup]="gridForm">
+      <p>
+        <input type="radio" value="sum" formControlName="calculation"> Sum
+        <input type="radio" value="mult" formControlName="calculation"> Mult
+      </p>
+      <table class="table table-hover table-sm row-border hover">
+        <thead class="table-header">
+          <tr>
+            <td *ngFor="let col of columns; let colInd = index;" class="grid-cell">
+                <button (click)="addColumn(colInd)">Col +</button>
+                <button (click)="removeColumn(colInd)" [disabled]="columns.length === 1">Col -</button>
+            </td>
+          </tr>
+        </thead>
+        <tbody formArrayName="gridRows">
+            <tr *ngFor="let rowsCtrl of gridForm.get('gridRows')['controls']; let i = index; first as isFirst" >
+              <td *ngFor="let col of rowsCtrl.controls let ind = index" class="grid-cell">
+                  <input
+                  type="number"
+                  class="form-control"
+                  [formControl]="col"
+                  >
+              </td>
+              <button (click)="addRow(i)">Add row</button>
+              <button (click)="removeRow(i)" [disabled]="gridForm.get('gridRows')['controls'].length === 1">Remove row</button>
+            </tr>
+
+        </tbody>
+
+        <tbody>
+            <tr class="footer-row">
+                <td *ngFor="let colNumber of footerData" class="grid-cell " [ngClass]="">
+                  {{colNumber}}
+                </td>
+            </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
